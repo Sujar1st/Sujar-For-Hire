@@ -3,266 +3,490 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Name | Roblox Luau Scripter</title>
-  <meta name="description" content="Roblox Luau scripting portfolio — demos, code, and contact." />
+  <title>Sujar / Stravation | Roblox Luau Scripter</title>
+  <meta name="description" content="Sujar / Stravation — Roblox Luau scripter portfolio. Demos, code, and contact." />
+  <meta name="theme-color" content="#ff7a18" />
+
+  <!-- Open Graph (optional, looks nicer when sharing) -->
+  <meta property="og:title" content="Sujar / Stravation | Roblox Luau Scripter" />
+  <meta property="og:description" content="Roblox Luau scripter portfolio — demos, code, and contact." />
+  <meta property="og:type" content="website" />
 
   <style>
-    /* ====== EASY THEME CONTROLS ====== */
     :root{
-      --bg: #0b0f19;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.04);
-      --text: #eaf0ff;
-      --muted: rgba(234,240,255,.72);
-      --border: rgba(255,255,255,.10);
-      --accent: #7c3aed;   /* change me */
-      --accent2:#22c55e;   /* change me */
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
-      --max: 980px;
+      --bg0:#07080a;
+      --bg1:#0b0d10;
+
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.04);
+      --border:rgba(255,255,255,.10);
+
+      --text:#f5f7fb;
+      --muted:rgba(245,247,251,.72);
+
+      --accent:#ff7a18;   /* ORANGE ACCENT */
+      --accent2:#ffb020;  /* WARM HIGHLIGHT */
+      --good:#22c55e;
+
+      --radius:20px;
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
+      --max: 1060px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-family:var(--sans);
       color:var(--text);
       background:
-        radial-gradient(1200px 700px at 15% 0%, color-mix(in oklab, var(--accent) 28%, transparent), transparent 60%),
-        radial-gradient(900px 600px at 90% 10%, color-mix(in oklab, var(--accent2) 18%, transparent), transparent 55%),
-        var(--bg);
+        radial-gradient(1200px 720px at 18% 0%, rgba(255,122,24,.20), transparent 60%),
+        radial-gradient(900px 620px at 90% 12%, rgba(255,176,32,.14), transparent 55%),
+        radial-gradient(1100px 780px at 55% 105%, rgba(255,122,24,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 55%, var(--bg0));
       line-height:1.55;
+      overflow-x:hidden;
     }
+
+    /* Subtle texture */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.07;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 4px);
+      mix-blend-mode:overlay;
+    }
+
     a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:46px 18px 80px}
+    .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 84px}
 
-    /* ====== TOP / HERO ====== */
-    header{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap}
-    .badge{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:9px 12px; border:1px solid var(--border); border-radius:999px;
-      background:var(--panel2); color:var(--muted);
-      backdrop-filter: blur(10px);
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(14px);
+      background: rgba(11,13,16,.70);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .dot{
-      width:10px; height:10px; border-radius:999px; background:var(--accent2);
-      box-shadow:0 0 0 6px color-mix(in oklab, var(--accent2) 22%, transparent);
+    .nav-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:12px 18px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
     }
-    h1{font-size:44px; line-height:1.08; margin:12px 0 12px}
-    .sub{max-width:65ch; color:var(--muted); font-size:16px}
-    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
-
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:11px 14px; border-radius:14px;
-      border:1px solid var(--border);
-      background:var(--panel2);
-      transition: transform .16s ease, border-color .16s ease, background .16s ease;
-      will-change: transform;
+    .brand{
+      display:flex; align-items:center; gap:10px; min-width:240px;
+      font-weight:700; letter-spacing:.2px;
     }
-    .btn:hover{
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        linear-gradient(135deg, #ff7a18, #ff4d00);
+      box-shadow: 0 10px 30px rgba(255,122,24,.25);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .brand small{color:var(--muted); font-weight:500}
+    .nav-links{display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+    .chip{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      transition: transform .16s ease, border-color .16s ease, background .16s ease, color .16s ease;
+      will-change:transform;
+      font-size:13px;
+    }
+    .chip:hover{
       transform: translateY(-2px);
-      border-color: color-mix(in oklab, var(--accent) 65%, var(--border));
-      background: color-mix(in oklab, var(--accent) 16%, var(--panel2));
+      border-color: rgba(255,122,24,.55);
+      background: rgba(255,122,24,.14);
+      color:rgba(255,255,255,.90);
     }
-    .btn.primary{
-      background: color-mix(in oklab, var(--accent) 26%, var(--panel2));
-      border-color: color-mix(in oklab, var(--accent) 65%, var(--border));
-    }
-    .btn.primary:hover{
-      background: color-mix(in oklab, var(--accent) 34%, var(--panel2));
+    .chip.primary{
+      color:rgba(255,255,255,.92);
+      border-color: rgba(255,122,24,.60);
+      background: rgba(255,122,24,.18);
     }
 
-    /* ====== SECTIONS ====== */
-    .grid{display:grid; gap:14px; margin-top:22px}
+    /* CARDS */
+    .grid{display:grid; gap:16px; margin-top:18px}
     .card{
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,.10);
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
       padding:18px;
+      position:relative;
+      overflow:hidden;
     }
-    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between}
-    .kicker{color:var(--muted); font-size:13px; letter-spacing:.08em; text-transform:uppercase}
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(600px 220px at 20% 0%, rgba(255,122,24,.16), transparent 60%),
+        radial-gradient(520px 240px at 100% 10%, rgba(255,176,32,.10), transparent 62%);
+      opacity:.75;
+      pointer-events:none;
+    }
+    .card > *{position:relative; z-index:1}
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.62);
+    }
+    h1{font-size:46px; line-height:1.05; margin:10px 0 12px}
     h2{margin:0 0 10px; font-size:20px}
-    .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    h3{margin:0 0 6px; font-size:18px}
+
+    .sub{color:var(--muted); max-width:72ch}
+    .row{display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between; align-items:flex-start}
+
+    .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
     .pill{
-      font-size:13px; color:var(--muted);
-      padding:7px 10px; border-radius:999px;
-      border:1px solid var(--border);
-      background: var(--panel2);
+      font-size:13px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color:rgba(255,255,255,.72);
+    }
+    .mono{font-family:var(--mono)}
+
+    /* BUTTONS */
+    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:11px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      will-change:transform;
+      font-size:14px;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,122,24,.60);
+      background: rgba(255,122,24,.14);
+    }
+    .btn.primary{
+      border-color: rgba(255,122,24,.65);
+      background: linear-gradient(135deg, rgba(255,122,24,.34), rgba(255,255,255,.03));
+    }
+    .btn.primary:hover{
+      background: linear-gradient(135deg, rgba(255,122,24,.44), rgba(255,255,255,.03));
     }
 
-    /* ====== PROJECTS ====== */
-    .projects{display:grid; grid-template-columns:1fr; gap:14px}
-    @media (min-width: 860px){
-      .projects{grid-template-columns:1fr 1fr}
+    /* HERO */
+    .hero{
+      display:grid;
+      gap:16px;
+      grid-template-columns: 1.35fr .85fr;
+      margin-top:18px;
+      align-items:start;
     }
-    .proj h3{margin:0 0 6px; font-size:18px}
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      h1{font-size:40px}
+    }
+
+    .status{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color:rgba(255,255,255,.78);
+      width:fit-content;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--good);
+      box-shadow:0 0 0 6px rgba(34,197,94,.14);
+    }
+    .accentText{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    /* PROJECTS */
+    .projects{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 920px){
+      .projects{grid-template-columns:1fr}
+    }
+    .proj{
+      background: var(--panel2);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .proj::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(520px 240px at 15% 0%, rgba(255,122,24,.12), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .proj > *{position:relative; z-index:1}
     .proj p{margin:0 0 10px; color:var(--muted)}
     ul{margin:10px 0 0 18px; padding:0; color:var(--muted)}
     li{margin:6px 0}
-    .proj .btns{margin-top:12px}
 
-    /* ====== FOOTER ====== */
-    footer{margin-top:18px; color:var(--muted); font-size:13px}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace}
+    /* FOOTER */
+    footer{
+      margin-top:18px;
+      color:rgba(255,255,255,.60);
+      font-size:13px;
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between;
+      align-items:center;
+      padding:10px 2px 0;
+    }
+
+    /* ENTRY ANIMATION */
+    @media (prefers-reduced-motion: no-preference){
+      .floatIn{animation: floatIn .7s ease both}
+      .floatIn.d2{animation-delay:.06s}
+      .floatIn.d3{animation-delay:.12s}
+      .floatIn.d4{animation-delay:.18s}
+      @keyframes floatIn{
+        from{opacity:0; transform: translateY(10px)}
+        to{opacity:1; transform: translateY(0)}
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <div class="badge">
-          <span class="dot"></span>
-          <span id="statusText">Open to commissions</span>
-          <span class="mono">• Europe/Madrid</span>
-        </div>
-
-        <h1>Your Name <span style="color:color-mix(in oklab, var(--accent) 75%, var(--text));">— Roblox Luau Scripter</span></h1>
-        <div class="sub">
-          I build clean, secure, and scalable Roblox systems: gameplay, UI, networking, and data saving.
-          Here are my best demos + source code.
-        </div>
-
-        <div class="btns">
-          <a class="btn primary" href="https://www.roblox.com/games/XXXXXXXXX/Your-Portfolio-Hub" target="_blank" rel="noreferrer">▶ Play Demos</a>
-          <a class="btn" href="https://github.com/YOURNAME" target="_blank" rel="noreferrer">⌂ GitHub</a>
-          <a class="btn" href="#contact">✉ Contact</a>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          Sujar / Stravation <small class="mono">(@Sujar1st)</small><br/>
+          <small>Roblox Luau Scripter</small>
         </div>
       </div>
 
-      <div class="card" style="min-width:260px; max-width:360px;">
-        <div class="kicker">Quick Proof</div>
-        <h2>What you’ll get</h2>
-        <ul>
-          <li><b>Server-authoritative</b> logic + remote validation</li>
-          <li><b>Modular architecture</b> (clean ModuleScripts/services)</li>
-          <li><b>Performance-minded</b> (profiling + sensible loops)</li>
-        </ul>
-        <div class="pillrow">
-          <span class="pill">Luau</span>
-          <span class="pill">Networking</span>
-          <span class="pill">UI</span>
-          <span class="pill">DataStore</span>
-        </div>
+      <div class="nav-links">
+        <a class="chip" href="#projects">Projects</a>
+        <a class="chip" href="#skills">Skills</a>
+        <a class="chip" href="#contact">Contact</a>
+        <a class="chip primary" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">GitHub ↗</a>
       </div>
-    </header>
-
-    <div class="grid">
-      <section class="card">
-        <div class="row">
-          <div>
-            <div class="kicker">Skills</div>
-            <h2>What I build</h2>
-            <div class="sub">
-              Gameplay systems, UI logic, saving, round systems, inventory, combat, and clean APIs.
-            </div>
-          </div>
-          <div class="pillrow" style="max-width:420px; justify-content:flex-end">
-            <span class="pill">RemoteEvents + validation</span>
-            <span class="pill">State machines</span>
-            <span class="pill">Reusable modules</span>
-            <span class="pill">Tween/UI polish</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="kicker">Projects</div>
-        <h2>Featured work</h2>
-
-        <div class="projects">
-          <!-- Project 1 -->
-          <div class="card proj" style="box-shadow:none; background:var(--panel2);">
-            <h3>Inventory + Hotbar System</h3>
-            <p>Fast UI, clean item logic, and safe server authority.</p>
-            <ul>
-              <li>Drag/drop, stackables, equip/unequip</li>
-              <li>Server-checked item granting</li>
-              <li>Saves/loads player inventory</li>
-            </ul>
-            <div class="btns">
-              <a class="btn primary" href="https://www.roblox.com/games/XXXXXXXXX/Inventory-Demo" target="_blank" rel="noreferrer">▶ Play</a>
-              <a class="btn" href="https://github.com/YOURNAME/inventory-demo" target="_blank" rel="noreferrer">⌂ Code</a>
-            </div>
-          </div>
-
-          <!-- Project 2 -->
-          <div class="card proj" style="box-shadow:none; background:var(--panel2);">
-            <h3>Combat Framework</h3>
-            <p>Responsive feel with server-side checks and clean states.</p>
-            <ul>
-              <li>Cooldowns, combos, stun/i-frames</li>
-              <li>Server validated hits (anti-exploit mindset)</li>
-              <li>Replicated VFX/SFX hooks</li>
-            </ul>
-            <div class="btns">
-              <a class="btn primary" href="https://www.roblox.com/games/XXXXXXXXX/Combat-Demo" target="_blank" rel="noreferrer">▶ Play</a>
-              <a class="btn" href="https://github.com/YOURNAME/combat-framework" target="_blank" rel="noreferrer">⌂ Code</a>
-            </div>
-          </div>
-
-          <!-- Project 3 -->
-          <div class="card proj" style="box-shadow:none; background:var(--panel2);">
-            <h3>Data Saving / Profile System</h3>
-            <p>Reliable saving patterns and safe session behavior.</p>
-            <ul>
-              <li>Retries + basic failure handling</li>
-              <li>Upgrades/leaderstats persistence</li>
-              <li>Clean API: Get/Set/Increment</li>
-            </ul>
-            <div class="btns">
-              <a class="btn primary" href="https://www.roblox.com/games/XXXXXXXXX/Data-Demo" target="_blank" rel="noreferrer">▶ Play</a>
-              <a class="btn" href="https://github.com/YOURNAME/data-profile-system" target="_blank" rel="noreferrer">⌂ Code</a>
-            </div>
-          </div>
-
-          <!-- Project 4 -->
-          <div class="card proj" style="box-shadow:none; background:var(--panel2);">
-            <h3>Round / Match System</h3>
-            <p>Lobby → round → results, with a simple state machine.</p>
-            <ul>
-              <li>Map rotation + teams</li>
-              <li>Round timers + win conditions</li>
-              <li>Clean separation of server/client</li>
-            </ul>
-            <div class="btns">
-              <a class="btn primary" href="https://www.roblox.com/games/XXXXXXXXX/Round-Demo" target="_blank" rel="noreferrer">▶ Play</a>
-              <a class="btn" href="https://github.com/YOURNAME/round-system" target="_blank" rel="noreferrer">⌂ Code</a>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="card" id="contact">
-        <div class="kicker">Contact</div>
-        <h2>Let’s build something</h2>
-        <div class="sub">Fast replies. Clear scope. Clean code handoff.</div>
-
-        <div class="btns">
-          <a class="btn primary" href="mailto:YOUR_EMAIL@example.com">✉ Email</a>
-          <a class="btn" href="https://discord.com/users/YOUR_ID" target="_blank" rel="noreferrer">💬 Discord</a>
-          <a class="btn" href="https://www.roblox.com/users/XXXXXXXXX/profile" target="_blank" rel="noreferrer">🧩 Roblox Profile</a>
-        </div>
-
-        <footer>
-          <div>Tip: Replace the <span class="mono">XXXXXXXXX</span> links with your real Roblox game/user IDs.</div>
-          <div style="margin-top:8px;">© <span id="year"></span> Your Name</div>
-        </footer>
-      </section>
     </div>
   </div>
 
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card floatIn">
+        <div class="status">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="statusText">Open to commissions</span>
+          <span class="mono" style="opacity:.7">• Roblox scripter</span>
+        </div>
+
+        <h1>
+          I build <span class="accentText">clean, secure</span><br/>
+          Roblox systems in Luau.
+        </h1>
+
+        <p class="sub">
+          I focus on server-authoritative gameplay, smooth UI logic, and readable architecture.
+          Everything here is built to be easy to extend and hard to break.
+        </p>
+
+        <div class="btns">
+          <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">🧩 Roblox Profile</a>
+          <a class="btn" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ GitHub Code</a>
+          <a class="btn" href="#contact">✉ Contact</a>
+        </div>
+
+        <div class="pillrow">
+          <span class="pill">Server authority</span>
+          <span class="pill">Remote validation</span>
+          <span class="pill">Modular APIs</span>
+          <span class="pill">Performance-minded</span>
+        </div>
+      </div>
+
+      <aside class="card floatIn d2">
+        <div class="kicker">Quick proof</div>
+        <h2>What this portfolio shows</h2>
+        <ul>
+          <li><b>Secure networking</b> (validated remotes; anti-exploit mindset)</li>
+          <li><b>Clean structure</b> (modules/services; predictable flow)</li>
+          <li><b>Polish</b> (responsive UI feel + gameplay timing)</li>
+        </ul>
+
+        <div class="pillrow" style="margin-top:14px">
+          <span class="pill">Luau</span>
+          <span class="pill">UI</span>
+          <span class="pill">DataStore</span>
+          <span class="pill">Combat</span>
+        </div>
+
+        <div style="margin-top:14px; color:rgba(255,255,255,.62); font-size:13px">
+          <span class="mono">Next upgrade:</span> add 2–4 demo game links in Projects below.
+        </div>
+      </aside>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="card floatIn d3">
+      <div class="row">
+        <div>
+          <div class="kicker">Projects</div>
+          <h2>Featured work</h2>
+          <p class="sub">
+            Replace the “Play” links with your Roblox demo experiences. Replace “Code” links with specific repos.
+            For now, they point to your profiles.
+          </p>
+        </div>
+        <div class="pillrow" style="justify-content:flex-end; max-width:520px">
+          <span class="pill">Playable demos</span>
+          <span class="pill">Readable code</span>
+          <span class="pill">Focused systems</span>
+        </div>
+      </div>
+
+      <div class="projects">
+        <div class="proj">
+          <h3>Inventory + Hotbar System</h3>
+          <p>Fast UI + clean item logic with server checks.</p>
+          <ul>
+            <li>Drag/drop, stackables, equip/unequip flow</li>
+            <li>Server-validated requests & anti-spam guards</li>
+            <li>Save/load-ready structure</li>
+          </ul>
+          <div class="btns" style="margin-top:12px">
+            <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">▶ Play</a>
+            <a class="btn" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ Code</a>
+          </div>
+        </div>
+
+        <div class="proj">
+          <h3>Combat Framework</h3>
+          <p>State-based timing + server-side verification.</p>
+          <ul>
+            <li>Cooldowns, combos, stun/i-frames</li>
+            <li>Validated hit logic (server authority)</li>
+            <li>Hooks for VFX/SFX replication</li>
+          </ul>
+          <div class="btns" style="margin-top:12px">
+            <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">▶ Play</a>
+            <a class="btn" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ Code</a>
+          </div>
+        </div>
+
+        <div class="proj">
+          <h3>Data Saving / Profile System</h3>
+          <p>Reliable data patterns with clean APIs.</p>
+          <ul>
+            <li>Structured defaults + safe loading flow</li>
+            <li>Get/Set/Increment helpers</li>
+            <li>Basic failure handling & retries</li>
+          </ul>
+          <div class="btns" style="margin-top:12px">
+            <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">▶ Play</a>
+            <a class="btn" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ Code</a>
+          </div>
+        </div>
+
+        <div class="proj">
+          <h3>Round / Match System</h3>
+          <p>Lobby → round → results using a simple state machine.</p>
+          <ul>
+            <li>Map rotation + win conditions</li>
+            <li>Server/client separation done cleanly</li>
+            <li>Extendable hooks for game modes</li>
+          </ul>
+          <div class="btns" style="margin-top:12px">
+            <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">▶ Play</a>
+            <a class="btn" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ Code</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="grid">
+      <div class="card floatIn d4">
+        <div class="kicker">Skills</div>
+        <h2>What I’m good at</h2>
+        <div class="pillrow">
+          <span class="pill">Luau modules</span>
+          <span class="pill">RemoteEvents validation</span>
+          <span class="pill">UI state + TweenService</span>
+          <span class="pill">DataStore patterns</span>
+          <span class="pill">CollectionService</span>
+          <span class="pill">Performance profiling</span>
+        </div>
+        <p class="sub" style="margin-top:10px">
+          My goal is code that feels good in-game and stays maintainable as features grow.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="kicker">How I work</div>
+        <h2>Simple process</h2>
+        <ul>
+          <li><b>Brief</b> — goals, references, must-have features</li>
+          <li><b>Plan</b> — scope + milestones (playable early)</li>
+          <li><b>Build</b> — clean modules, validated networking</li>
+          <li><b>Handoff</b> — docs + clean code structure</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="card" style="margin-top:16px">
+      <div class="kicker">Contact</div>
+      <h2>Reach me</h2>
+      <p class="sub">
+        Add your Discord/email here when you want people to contact you. For now, your GitHub + Roblox are linked.
+      </p>
+
+      <div class="btns">
+        <!-- Replace with your email/discord when you want -->
+        <a class="btn primary" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">Message on GitHub</a>
+        <a class="btn" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">Roblox Profile</a>
+      </div>
+
+      <footer>
+        <div>© <span id="year"></span> Sujar / Stravation — <span class="mono">GitHub Pages</span></div>
+        <div class="mono" style="opacity:.75">Accent: #ff7a18</div>
+      </footer>
+    </section>
+  </main>
+
   <script>
-    // Auto year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Optional: change status text quickly here
+    // OPTIONAL: flip your status instantly
     // document.getElementById("statusText").textContent = "Busy — waitlist";
   </script>
 </body>
