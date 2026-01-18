@@ -3,36 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sujar / Stravation | Roblox Systems Engineer</title>
-  <meta name="description" content="Sujar / Stravation — Full-stack developer focused on Roblox server-authoritative systems, anti-cheat, modular APIs, and procedural generation." />
+  <title>Sujar / Stravation | Anti-Cheat Systems</title>
+  <meta name="description" content="Sujar / Stravation — hacker-style Roblox systems: server-authoritative gameplay, anti-cheat mindset, modular APIs, procedural generation." />
   <meta name="theme-color" content="#ff7a18" />
-
-  <meta property="og:title" content="Sujar / Stravation | Roblox Systems Engineer" />
-  <meta property="og:description" content="Server-authoritative Roblox experiences • Anti-cheat mindset • Modular APIs • Procedural generation • Full-stack dev." />
-  <meta property="og:type" content="website" />
 
   <style>
     :root{
-      --bg0:#060709;
+      /* Dark core */
+      --bg0:#050608;
       --bg1:#0a0c10;
       --bg2:#0f1218;
 
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.04);
-      --border:rgba(255,255,255,.10);
+      /* Text */
+      --text:#f4f6fb;
+      --muted:rgba(244,246,251,.74);
+      --faint:rgba(244,246,251,.56);
 
-      --text:#f5f7fb;
-      --muted:rgba(245,247,251,.70);
-      --faint:rgba(245,247,251,.54);
-
+      /* Orange accent */
       --accent:#ff7a18;
       --accent2:#ffb020;
 
-      --ok:#22c55e;
-      --warn:#f59e0b;
-
+      /* UI */
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.035);
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 22px 85px rgba(0,0,0,.58);
       --radius:20px;
-      --shadow: 0 18px 70px rgba(0,0,0,.55);
       --max: 1120px;
 
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -43,33 +39,47 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:var(--sans);
       color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 18% 0%, rgba(255,122,24,.22), transparent 60%),
-        radial-gradient(900px 650px at 90% 12%, rgba(255,176,32,.14), transparent 55%),
-        radial-gradient(1100px 760px at 55% 105%, rgba(255,122,24,.11), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 55%, var(--bg0));
+      font-family:var(--sans);
       line-height:1.55;
       overflow-x:hidden;
+      background:
+        radial-gradient(1200px 760px at 18% 0%, rgba(255,122,24,.18), transparent 60%),
+        radial-gradient(900px 660px at 90% 12%, rgba(255,176,32,.12), transparent 55%),
+        radial-gradient(1100px 780px at 55% 110%, rgba(255,122,24,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 55%, var(--bg0));
     }
 
-    /* subtle texture */
+    /* Scanlines + subtle grid texture */
     body::before{
       content:"";
       position:fixed; inset:0;
       pointer-events:none;
-      opacity:.07;
-      background-image:
-        repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 3px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 4px);
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.045) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 5px);
+      opacity:.06;
       mix-blend-mode:overlay;
+    }
+    body::after{
+      content:"";
+      position:fixed; inset:-40px 0 0 0;
+      pointer-events:none;
+      background: linear-gradient(180deg, transparent, rgba(255,122,24,.08), transparent);
+      opacity:.18;
+      filter: blur(0.2px);
+      animation: scan 4.8s linear infinite;
+      mix-blend-mode:screen;
+    }
+    @keyframes scan{
+      0%{transform:translateY(-30%)}
+      100%{transform:translateY(30%)}
     }
 
     a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:22px 18px 84px}
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 18px 88px}
 
-    /* NAV */
+    /* Sticky nav */
     .nav{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(14px);
@@ -86,50 +96,57 @@
     .brand{
       display:flex; align-items:center; gap:10px;
       min-width:260px;
-      font-weight:760;
-      letter-spacing:.15px;
+      font-weight:800;
+      letter-spacing:.2px;
     }
     .logo{
       width:34px; height:34px; border-radius:12px;
       background:
-        radial-gradient(circle at 28% 30%, rgba(255,255,255,.26), transparent 55%),
+        radial-gradient(circle at 30% 28%, rgba(255,255,255,.28), transparent 55%),
         linear-gradient(135deg, #ff7a18, #ff4d00);
-      box-shadow: 0 10px 32px rgba(255,122,24,.28);
       border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 32px rgba(255,122,24,.28);
     }
     .brand small{
       display:block;
+      font-family:var(--mono);
+      font-weight:600;
       color:var(--muted);
-      font-weight:520;
       margin-top:2px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:11px;
     }
+
     .nav-links{
-      display:flex; gap:8px;
-      flex-wrap:wrap; align-items:center; justify-content:flex-end;
+      display:flex; gap:8px; flex-wrap:wrap;
+      align-items:center; justify-content:flex-end;
     }
     .chip{
+      font-family:var(--mono);
       padding:9px 12px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
-      color:var(--muted);
+      color:rgba(255,255,255,.72);
       transition: transform .16s ease, border-color .16s ease, background .16s ease, color .16s ease;
       will-change:transform;
-      font-size:13px;
+      font-size:12px;
+      letter-spacing:.02em;
     }
     .chip:hover{
       transform: translateY(-2px);
-      border-color: rgba(255,122,24,.60);
+      border-color: rgba(255,122,24,.65);
       background: rgba(255,122,24,.14);
-      color:rgba(255,255,255,.90);
+      color:rgba(255,255,255,.92);
     }
     .chip.primary{
-      color:rgba(255,255,255,.92);
-      border-color: rgba(255,122,24,.65);
+      border-color: rgba(255,122,24,.72);
       background: rgba(255,122,24,.18);
+      color:rgba(255,255,255,.92);
     }
 
-    /* CARDS */
+    /* Cards */
     .grid{display:grid; gap:16px; margin-top:18px}
     .card{
       border:1px solid rgba(255,255,255,.10);
@@ -143,66 +160,70 @@
     }
     .card::after{
       content:"";
-      position:absolute;
-      inset:-1px;
+      position:absolute; inset:-1px;
       background:
-        radial-gradient(680px 240px at 18% 0%, rgba(255,122,24,.16), transparent 60%),
-        radial-gradient(620px 260px at 100% 10%, rgba(255,176,32,.10), transparent 62%);
+        radial-gradient(760px 260px at 16% 0%, rgba(255,122,24,.16), transparent 62%),
+        radial-gradient(620px 260px at 100% 10%, rgba(255,176,32,.10), transparent 64%);
       opacity:.72;
       pointer-events:none;
     }
     .card > *{position:relative; z-index:1}
 
     .kicker{
+      font-family:var(--mono);
       font-size:12px;
-      letter-spacing:.12em;
+      letter-spacing:.14em;
       text-transform:uppercase;
       color:rgba(255,255,255,.62);
     }
     .mono{font-family:var(--mono)}
-    h1{font-size:48px; line-height:1.05; margin:10px 0 12px}
+    h1{font-size:46px; line-height:1.05; margin:10px 0 10px}
     h2{margin:0 0 10px; font-size:20px}
     h3{margin:0 0 6px; font-size:18px}
 
-    .sub{color:var(--muted); max-width:74ch}
+    .sub{color:var(--muted); max-width:76ch}
     .row{display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between; align-items:flex-start}
 
     .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
     .pill{
-      font-size:13px;
+      font-family:var(--mono);
+      font-size:12px;
       padding:7px 10px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       color:rgba(255,255,255,.74);
+      letter-spacing:.02em;
     }
 
-    /* BUTTONS */
+    /* Buttons */
     .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
     .btn{
       display:inline-flex; align-items:center; gap:10px;
+      font-family:var(--mono);
       padding:11px 14px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       transition: transform .16s ease, border-color .16s ease, background .16s ease;
       will-change:transform;
-      font-size:14px;
+      font-size:13px;
+      letter-spacing:.02em;
     }
     .btn:hover{
       transform: translateY(-2px);
-      border-color: rgba(255,122,24,.62);
+      border-color: rgba(255,122,24,.70);
       background: rgba(255,122,24,.14);
     }
     .btn.primary{
-      border-color: rgba(255,122,24,.70);
-      background: linear-gradient(135deg, rgba(255,122,24,.36), rgba(255,255,255,.03));
+      border-color: rgba(255,122,24,.78);
+      background: linear-gradient(135deg, rgba(255,122,24,.38), rgba(255,255,255,.03));
     }
     .btn.primary:hover{
-      background: linear-gradient(135deg, rgba(255,122,24,.48), rgba(255,255,255,.03));
+      background: linear-gradient(135deg, rgba(255,122,24,.52), rgba(255,255,255,.03));
     }
 
-    /* HERO */
+    /* Hero layout */
     .hero{
       display:grid;
       gap:16px;
@@ -212,39 +233,105 @@
     }
     @media (max-width: 980px){
       .hero{grid-template-columns:1fr}
-      h1{font-size:42px}
+      h1{font-size:40px}
     }
 
-    .status{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      color:rgba(255,255,255,.82);
-      width:fit-content;
+    /* Glitch title */
+    .glitch{
+      position:relative;
+      display:inline-block;
+      font-family:var(--mono);
+      letter-spacing:.02em;
     }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--warn);
-      box-shadow:0 0 0 6px rgba(245,158,11,.14);
-    }
-    .accentText{
+    .glitch .accent{
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
+      font-family:var(--sans);
+      font-weight:850;
+      letter-spacing:-.02em;
+    }
+    .glitch::before,
+    .glitch::after{
+      content: attr(data-text);
+      position:absolute;
+      left:0; top:0;
+      width:100%;
+      overflow:hidden;
+      white-space:nowrap;
+      pointer-events:none;
+      opacity:.35;
+      mix-blend-mode:screen;
+    }
+    .glitch::before{
+      transform: translate(1px, -1px);
+      color: rgba(255,122,24,.85);
+      clip-path: inset(0 0 60% 0);
+      animation: glitch1 3.2s infinite linear;
+    }
+    .glitch::after{
+      transform: translate(-1px, 1px);
+      color: rgba(255,176,32,.75);
+      clip-path: inset(55% 0 0 0);
+      animation: glitch2 2.6s infinite linear;
+    }
+    @keyframes glitch1{
+      0%, 92%, 100% { clip-path: inset(0 0 60% 0); }
+      93% { clip-path: inset(10% 0 45% 0); }
+      94% { clip-path: inset(0 0 70% 0); }
+      95% { clip-path: inset(18% 0 38% 0); }
+      96% { clip-path: inset(0 0 60% 0); }
+    }
+    @keyframes glitch2{
+      0%, 88%, 100% { clip-path: inset(55% 0 0 0); }
+      89% { clip-path: inset(62% 0 0 0); }
+      90% { clip-path: inset(48% 0 0 0); }
+      91% { clip-path: inset(57% 0 0 0); }
     }
 
-    /* SHOWCASE GRID */
-    .showcase{
+    /* Terminal block */
+    .term{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(5,6,8,.55);
+      border-radius: 16px;
+      overflow:hidden;
+    }
+    .term-top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    .dots{display:flex; gap:7px}
+    .dot{width:10px; height:10px; border-radius:999px; background:rgba(255,255,255,.18)}
+    .dot.o{background:rgba(255,122,24,.75)}
+    .dot.y{background:rgba(255,176,32,.55)}
+    .dot.g{background:rgba(34,197,94,.45)}
+    .term-title{font-family:var(--mono); color:rgba(255,255,255,.70); font-size:12px}
+    .term-body{
+      padding:12px;
+      font-family:var(--mono);
+      color:rgba(255,255,255,.86);
+      font-size:12.5px;
+      line-height:1.6;
+    }
+    .cmd{color:rgba(255,255,255,.88)}
+    .prompt{color:rgba(255,122,24,.85)}
+    .dim{color:rgba(255,255,255,.58)}
+    .ok{color:rgba(34,197,94,.78)}
+    .warn{color:rgba(255,176,32,.82)}
+
+    /* Tiles */
+    .tiles{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:14px;
       margin-top:14px;
     }
     @media (max-width: 980px){
-      .showcase{grid-template-columns:1fr}
+      .tiles{grid-template-columns:1fr}
     }
     .tile{
       background: var(--panel2);
@@ -257,68 +344,52 @@
     }
     .tile::before{
       content:"";
-      position:absolute;
-      inset:-1px;
-      background: radial-gradient(520px 260px at 18% 0%, rgba(255,122,24,.12), transparent 60%);
+      position:absolute; inset:-1px;
+      background: radial-gradient(560px 260px at 16% 0%, rgba(255,122,24,.12), transparent 62%);
       opacity:.9;
       pointer-events:none;
     }
     .tile > *{position:relative; z-index:1}
     .tile:hover{
       transform: translateY(-2px);
-      border-color: rgba(255,122,24,.55);
+      border-color: rgba(255,122,24,.60);
       background: rgba(255,122,24,.08);
     }
     .tile p{margin:0; color:var(--muted)}
-    .tagline{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
-    .tag{
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      color:rgba(255,255,255,.72);
+    .tile .mini{
+      margin-top:10px;
       font-family:var(--mono);
+      font-size:12px;
+      color:rgba(255,255,255,.70);
+      border-top:1px dashed rgba(255,255,255,.12);
+      padding-top:10px;
     }
 
-    /* TIMELINE */
-    .timeline{display:grid; gap:10px; margin-top:10px}
-    .step{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+    /* Lists */
+    ul{
+      margin:10px 0 0 18px;
+      padding:0;
+      color:var(--muted);
     }
-    .badge{
-      min-width:34px;
-      height:34px;
-      border-radius:12px;
-      display:flex; align-items:center; justify-content:center;
-      border:1px solid rgba(255,122,24,.45);
-      background: rgba(255,122,24,.14);
-      box-shadow: 0 10px 25px rgba(255,122,24,.12);
-      font-family:var(--mono);
-    }
-    .step b{display:block; margin-bottom:2px}
-    .step span{color:var(--muted)}
+    li{margin:7px 0}
 
     footer{
       margin-top:18px;
-      color:rgba(255,255,255,.60);
-      font-size:13px;
+      color:rgba(255,255,255,.58);
+      font-size:12.5px;
       display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between;
       align-items:center;
       padding:10px 2px 0;
+      font-family:var(--mono);
     }
 
-    /* Motion */
+    /* Entry motion */
     @media (prefers-reduced-motion: no-preference){
-      .floatIn{animation: floatIn .7s ease both}
-      .floatIn.d2{animation-delay:.06s}
-      .floatIn.d3{animation-delay:.12s}
-      .floatIn.d4{animation-delay:.18s}
-      @keyframes floatIn{
+      .in{animation: in .7s ease both}
+      .in.d2{animation-delay:.06s}
+      .in.d3{animation-delay:.12s}
+      .in.d4{animation-delay:.18s}
+      @keyframes in{
         from{opacity:0; transform: translateY(10px)}
         to{opacity:1; transform: translateY(0)}
       }
@@ -333,14 +404,14 @@
         <div class="logo" aria-hidden="true"></div>
         <div>
           Sujar / Stravation
-          <small class="mono">@Sujar1st • Roblox Systems / Full-Stack</small>
+          <small>server-authoritative • anti-cheat • modular apis • procedural gen</small>
         </div>
       </div>
 
       <div class="nav-links">
-        <a class="chip" href="#focus">Focus</a>
-        <a class="chip" href="#systems">Systems</a>
-        <a class="chip" href="#roadmap">Roadmap</a>
+        <a class="chip" href="#ops">Ops</a>
+        <a class="chip" href="#capabilities">Capabilities</a>
+        <a class="chip" href="#stack">Stack</a>
         <a class="chip" href="#contact">Contact</a>
         <a class="chip primary" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">GitHub ↗</a>
       </div>
@@ -350,239 +421,161 @@
   <main class="wrap">
     <!-- HERO -->
     <section class="hero">
-      <div class="card floatIn">
-        <div class="status">
-          <span class="dot" aria-hidden="true"></span>
-          <span id="statusText">Portfolio is in progress (0 demos — for now)</span>
-          <span class="mono" style="opacity:.72">• building systems</span>
-        </div>
+      <div class="card in">
+        <div class="kicker">identity</div>
 
-        <h1>
-          I build <span class="accentText">server-authoritative</span><br/>
-          Roblox experiences that don’t fold to exploits.
+        <h1 class="glitch" data-text="Sujar / Stravation">
+          <span class="accent">Sujar / Stravation</span>
         </h1>
 
         <p class="sub">
-          Full-stack developer focused on: anti-cheat mindset, validated networking, modular APIs,
-          procedural generation, and maintainable architecture. This page is designed as a systems showcase
-          until demos go live.
+          Full-stack developer building Roblox systems with a security-first mindset:
+          <span class="mono">never trust the client</span>, validate everything, keep modules tight, and make exploits expensive.
         </p>
 
         <div class="btns">
-          <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">🧩 Roblox Profile</a>
+          <a class="btn primary" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">🧩 Roblox</a>
           <a class="btn" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ GitHub</a>
           <a class="btn" href="#contact">✉ Contact</a>
         </div>
 
         <div class="pillrow">
-          <span class="pill">Server authority</span>
-          <span class="pill">Anti-cheat mindset</span>
-          <span class="pill">Modular APIs</span>
-          <span class="pill">Procedural gen</span>
-          <span class="pill">Full-stack</span>
+          <span class="pill">server authority</span>
+          <span class="pill">anti-cheat</span>
+          <span class="pill">modular apis</span>
+          <span class="pill">procedural gen</span>
+          <span class="pill">full-stack</span>
         </div>
       </div>
 
-      <aside class="card floatIn d2">
-        <div class="kicker">Engineering values</div>
-        <h2>What I optimize for</h2>
-        <ul style="margin:10px 0 0 18px; color:var(--muted)">
-          <li><b>Security first:</b> validate remotes, never trust the client</li>
-          <li><b>Clean boundaries:</b> APIs, modules, predictable data flow</li>
-          <li><b>Scale:</b> systems that survive “just one more feature”</li>
-          <li><b>Performance:</b> avoid expensive patterns, profile early</li>
-        </ul>
-        <div class="tagline">
-          <span class="tag">Luau</span>
-          <span class="tag">Networking</span>
-          <span class="tag">Systems</span>
-          <span class="tag">Security</span>
+      <aside class="card in d2" id="ops">
+        <div class="kicker">ops console</div>
+
+        <div class="term" aria-label="Terminal-style overview">
+          <div class="term-top">
+            <div class="dots" aria-hidden="true">
+              <div class="dot o"></div><div class="dot y"></div><div class="dot g"></div>
+            </div>
+            <div class="term-title">stravation@ops:~/roblox/security</div>
+            <div class="term-title dim">LIVE</div>
+          </div>
+          <div class="term-body">
+            <div><span class="prompt">></span> <span class="cmd">THREAT_MODEL</span> <span class="dim">--client=untrusted</span></div>
+            <div class="dim">- assume spoofed inputs, forged remotes, speed hacks, state desync attempts</div>
+            <div class="dim">- validate server-side, rate-limit, sanity-check, log anomalies</div>
+            <br/>
+            <div><span class="prompt">></span> <span class="cmd">ARCH</span> <span class="dim">--modules --apis</span></div>
+            <div class="dim">- stable contracts, clear ownership, deterministic state transitions</div>
+            <div class="dim">- small surfaces, minimal trust, maximum observability</div>
+            <br/>
+            <div><span class="prompt">></span> <span class="cmd ok">STATUS</span></div>
+            <div class="ok">- BUILDING: secure primitives • server authority • procedural systems</div>
+            <div class="warn">- MODE: ship clean, break exploits</div>
+          </div>
         </div>
       </aside>
     </section>
 
-    <!-- FOCUS -->
-    <section id="focus" class="card floatIn d3" style="margin-top:16px">
+    <!-- CAPABILITIES -->
+    <section class="card in d3" id="capabilities" style="margin-top:16px">
       <div class="row">
         <div>
-          <div class="kicker">Focus areas</div>
-          <h2>What I’m building right now</h2>
+          <div class="kicker">capabilities</div>
+          <h2>What I build (hacker anti-cheat style)</h2>
           <p class="sub">
-            No public demos yet — but these are the exact categories I’m working on and will publish as
-            standalone showcases (each with a repo + playable demo).
+            Secure-by-default systems designed to survive hostile clients, feature creep, and real player load.
           </p>
         </div>
         <div class="pillrow" style="justify-content:flex-end; max-width:520px">
-          <span class="pill">Security</span>
-          <span class="pill">APIs</span>
-          <span class="pill">Modularity</span>
-          <span class="pill">Procedural worlds</span>
+          <span class="pill">validation</span>
+          <span class="pill">rate limits</span>
+          <span class="pill">state machines</span>
+          <span class="pill">telemetry</span>
         </div>
       </div>
 
-      <div class="showcase" style="margin-top:14px">
+      <div class="tiles">
         <div class="tile">
           <h3>Server-Authoritative Core</h3>
-          <p>State owned by the server. Client = input + visuals only.</p>
-          <div class="tagline">
-            <span class="tag">validated remotes</span><span class="tag">state machine</span><span class="tag">replication</span>
-          </div>
+          <p>Server owns state. Clients request actions. Server decides outcomes.</p>
+          <div class="mini">focus: deterministic transitions • tight replication • desync resistance</div>
         </div>
+
         <div class="tile">
-          <h3>Anti-Cheat Mindset</h3>
-          <p>Exploit-resistant patterns: rate limits, sanity checks, audit trails.</p>
-          <div class="tagline">
-            <span class="tag">rate limiting</span><span class="tag">sanity checks</span><span class="tag">telemetry</span>
-          </div>
+          <h3>Anti-Cheat Patterns</h3>
+          <p>Exploit pressure is reduced through validation, throttles, and anomaly signals.</p>
+          <div class="mini">focus: spam guards • sanity checks • scoring • logs</div>
         </div>
+
         <div class="tile">
           <h3>Modular APIs</h3>
-          <p>Modules with clean contracts: stable, testable, reusable systems.</p>
-          <div class="tagline">
-            <span class="tag">interfaces</span><span class="tag">dependency control</span><span class="tag">events</span>
-          </div>
+          <p>Modules with clean contracts and minimal surface area.</p>
+          <div class="mini">focus: interfaces • dependency control • event-driven design</div>
         </div>
 
         <div class="tile">
           <h3>Procedural Generation</h3>
-          <p>Seeded generation for maps/dungeons with deterministic debugging.</p>
-          <div class="tagline">
-            <span class="tag">seeded rng</span><span class="tag">constraints</span><span class="tag">biomes</span>
-          </div>
+          <p>Seeded generation for reproducible worlds and predictable debugging.</p>
+          <div class="mini">focus: seeded rng • constraints • replayability</div>
         </div>
+
         <div class="tile">
           <h3>Data Layer</h3>
-          <p>Robust save patterns, versioned schemas, safe migrations.</p>
-          <div class="tagline">
-            <span class="tag">schema v1→v2</span><span class="tag">migrations</span><span class="tag">defaults</span>
-          </div>
+          <p>Schema-aware persistence with versioning and safe migrations.</p>
+          <div class="mini">focus: defaults • migrations • safe writes • rollback plans</div>
         </div>
+
         <div class="tile">
-          <h3>Full-Stack Thinking</h3>
-          <p>Systems design + tooling: docs, workflows, and maintainability.</p>
-          <div class="tagline">
-            <span class="tag">docs</span><span class="tag">tooling</span><span class="tag">clean DX</span>
-          </div>
+          <h3>Full-Stack Discipline</h3>
+          <p>Systems thinking, tooling, docs, and maintainable delivery.</p>
+          <div class="mini">focus: dev workflow • DX • clarity under pressure</div>
         </div>
       </div>
     </section>
 
-    <!-- SYSTEMS (future demos placeholder) -->
-    <section id="systems" class="grid">
-      <div class="card floatIn d4">
-        <div class="kicker">Systems showcase</div>
-        <h2>Planned public demos</h2>
-        <p class="sub">
-          These will become clickable cards later (Play + Code). For now, they communicate exactly what you can hire me to build.
-        </p>
-
-        <div class="showcase">
-          <div class="tile">
-            <h3>Secure Ability / Combat Engine</h3>
-            <p>Server-verified hits, cooldowns, and state transitions.</p>
-            <div class="tagline"><span class="tag">anti-spam</span><span class="tag">latency-safe</span><span class="tag">events</span></div>
-          </div>
-          <div class="tile">
-            <h3>Procedural Dungeon Generator</h3>
-            <p>Seeded rooms + constraints + debug replay for issues.</p>
-            <div class="tagline"><span class="tag">seed</span><span class="tag">constraints</span><span class="tag">layout</span></div>
-          </div>
-          <div class="tile">
-            <h3>Anti-Cheat Toolkit</h3>
-            <p>Rate limiting, sanity checks, suspicious pattern signals.</p>
-            <div class="tagline"><span class="tag">limits</span><span class="tag">signals</span><span class="tag">logs</span></div>
-          </div>
-        </div>
-
-        <div class="btns" style="margin-top:14px">
-          <a class="btn primary" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ Follow progress on GitHub</a>
-          <a class="btn" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">🧩 Roblox Profile</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="kicker">Tech stack</div>
-        <h2>What you can expect</h2>
+    <!-- STACK -->
+    <section class="grid" id="stack">
+      <div class="card in d4">
+        <div class="kicker">stack</div>
+        <h2>Tools & style</h2>
         <div class="pillrow">
-          <span class="pill">Luau Modules</span>
-          <span class="pill">Remote validation</span>
-          <span class="pill">State machines</span>
-          <span class="pill">Deterministic RNG</span>
-          <span class="pill">Versioned data</span>
-          <span class="pill">Clean APIs</span>
-          <span class="pill">Documentation</span>
+          <span class="pill">Luau modules</span>
+          <span class="pill">remote validation</span>
+          <span class="pill">authoritative server state</span>
+          <span class="pill">event systems</span>
+          <span class="pill">deterministic rng</span>
+          <span class="pill">profiling mindset</span>
+          <span class="pill">docs-first APIs</span>
         </div>
-        <p class="sub" style="margin-top:10px">
-          If you want this page to look even more “real” immediately: add 1 small repo (even a utility module),
-          and I can wire it into the site as your first pinned card.
-        </p>
-      </div>
-    </section>
-
-    <!-- ROADMAP -->
-    <section id="roadmap" class="card" style="margin-top:16px">
-      <div class="kicker">Roadmap</div>
-      <h2>How this portfolio will fill out</h2>
-      <p class="sub">This section is a strong replacement for “projects” until demos exist.</p>
-
-      <div class="timeline">
-        <div class="step">
-          <div class="badge">01</div>
-          <div>
-            <b>Publish a “Secure Remotes” module</b>
-            <span>Rate limits, validation patterns, and example integrations.</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="badge">02</div>
-          <div>
-            <b>Release a procedural generation demo</b>
-            <span>Seeded generation + deterministic replay for debugging.</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="badge">03</div>
-          <div>
-            <b>Drop an anti-cheat toolkit</b>
-            <span>Signals + logging + suspicious behavior scoring (lightweight).</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="badge">04</div>
-          <div>
-            <b>Convert planned demos → real “Play + Code” cards</b>
-            <span>Each system becomes a public experience + repo.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="card" style="margin-top:16px">
-      <div class="kicker">Contact</div>
-      <h2>Where to find me</h2>
-      <p class="sub">
-        Add Discord/email later if you want commissions. For now, your public profiles are linked.
-      </p>
-
-      <div class="btns">
-        <a class="btn primary" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ GitHub</a>
-        <a class="btn" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">🧩 Roblox</a>
-        <a class="btn" href="#focus">⬆ Back to Focus</a>
+        <ul>
+          <li><span class="mono">rule #1:</span> input is a request, not truth</li>
+          <li><span class="mono">rule #2:</span> validate once, reuse everywhere (shared validators)</li>
+          <li><span class="mono">rule #3:</span> tight surfaces: small APIs, predictable behavior</li>
+          <li><span class="mono">rule #4:</span> observe: log anomalies and build signals</li>
+        </ul>
       </div>
 
-      <footer>
-        <div>© <span id="year"></span> Sujar / Stravation — <span class="mono">GitHub Pages</span></div>
-        <div class="mono" style="opacity:.75">Orange accent: #ff7a18</div>
-      </footer>
+      <div class="card" id="contact">
+        <div class="kicker">contact</div>
+        <h2>Find me</h2>
+        <p class="sub">Public profiles are the direct line.</p>
+
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/Sujar1st" target="_blank" rel="noreferrer">⌂ GitHub</a>
+          <a class="btn" href="https://www.roblox.com/users/311320884/profile" target="_blank" rel="noreferrer">🧩 Roblox</a>
+          <a class="btn" href="#ops">⬆ Ops</a>
+        </div>
+
+        <footer>
+          <div>© <span id="year"></span> sujar/stravation</div>
+          <div>accent: <span style="color:var(--accent)">#ff7a18</span></div>
+        </footer>
+      </div>
     </section>
   </main>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Flip this anytime:
-    // document.getElementById("statusText").textContent = "Open to commissions";
   </script>
 </body>
 </html>
